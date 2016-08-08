@@ -1,0 +1,109 @@
+diff --git a/scripts/bcon/bldit.bcon b/scripts/bcon/bldit.bcon
+index 96924d2..322985c 100755
+--- a/scripts/bcon/bldit.bcon
++++ b/scripts/bcon/bldit.bcon
+@@ -116,7 +116,7 @@
+  set IOAPI  = "${M3LIB}/ioapi_3.1/Linux2_${system}${compiler_ext} -lioapi"
+  set IOAPIMOD = ${M3LIB}/ioapi_3.1/Linux2_${system}${compiler_ext}
+ 
+- set NETCDF = "${M3LIB}/netcdf/lib -lnetcdf"
++ set NETCDF = "${M3LIB}/netcdf/lib -lnetcdff -lnetcdf -lhdf5_hl -lhdf5 -lz -lm -lcurl"
+ 
+ #> Set compiler flags
+  set F_FLAGS    = "${myFFLAGS} -I ${IOAPIMOD} -I."
+diff --git a/scripts/cctm/bldit.cctm b/scripts/cctm/bldit.cctm
+index 9ff323b..d318a12 100755
+--- a/scripts/cctm/bldit.cctm
++++ b/scripts/cctm/bldit.cctm
+@@ -181,11 +181,12 @@ set Mechanism = cb05tucl_ae6_aq
+  set LIOAPI  = "${M3LIB}/ioapi_3.1/Linux2_${system}${compiler_ext} -lioapi"
+  set IOAPIMOD = ${M3LIB}/ioapi_3.1/Linux2_${system}${compiler_ext}
+ 
+- set NETCDF = "${M3LIB}/netcdf/lib -lnetcdf"
++ set NETCDF = "${M3LIB}/netcdf/lib -lnetcdff -lnetcdf -lhdf5_hl -lhdf5 -lz -lm -lcurl"
+ 
+  if ( $?ParOpt ) then      # Multiprocessor system configuration
+     set PARIO = ${M3LIB}/pario
+     set STENEX = ${M3LIB}/se_snl
++    set MPI_INC = "/usr/include/mpich"
+  else
+     set PARIO = "."
+     set STENEX = "${M3LIB}/se_noop"
+diff --git a/scripts/cctm/run.cctm b/scripts/cctm/run.cctm
+index 621dcad..80eb148 100755
+--- a/scripts/cctm/run.cctm
++++ b/scripts/cctm/run.cctm
+@@ -308,7 +308,6 @@ endif
+  source $BASE/outck.q
+ 
+  ls -l $BLD/$EXEC; size $BLD/$EXEC
+- unlimit
+  limit
+ 
+ #> Executable call for single PE, uncomment to invoke
+diff --git a/scripts/config.cmaq b/scripts/config.cmaq
+index 8a0fb12..fbbe399 100755
+--- a/scripts/config.cmaq
++++ b/scripts/config.cmaq
+@@ -13,7 +13,7 @@
+ #> sourced from bldit.<model>
+ 
+ #> model repository location
+- setenv M3HOME /nas01/apps/CMAQv5.0.2
++ setenv M3HOME /opt/model/CMAQv5.0.2
+  setenv M3MODEL ${M3HOME}/models
+  setenv M3DATA  ${M3HOME}/data
+ 
+@@ -25,7 +25,7 @@
+ #> set the COMPILER
+   setenv COMPILER intel
+ # setenv COMPILER pgi
+-# setenv COMPILER gcc
++  setenv COMPILER gcc
+ 
+  setenv system "`/bin/uname -i`"
+  setenv bld_os "`/bin/uname -s``/bin/uname -r | cut -d. -f1`"
+@@ -39,7 +39,7 @@ setenv extra_lib
+ ####### MPI libraries ########
+ #use -lmpich for mvpich and -lmpi for openmpi
+  setenv mpi "-lmpich"
+-#setenv mpi "-lmpi"
++ setenv mpi "-lmpi"
+ 
+  switch ( $COMPILER )
+     case intel:
+@@ -71,10 +71,10 @@ setenv extra_lib
+     case gcc:
+ ##> gfortran compiler......................................................
+        setenv compiler gcc
+-       setenv compiler_ext gfort
++       setenv compiler_ext
+        setenv myFC mpif90 #gfortran
+        setenv myCC gcc
+-       setenv myLINK_FLAG ""
++       setenv myLINK_FLAG "-fopenmp"
+        setenv myFFLAGS "-ffixed-form -ffixed-line-length-132 -O3 -funroll-loops -finit-character=32"
+        setenv myFRFLAGS "-ffree-form -ffree-line-length-none -O3 -funroll-loops -finit-character=32"
+        setenv myCFLAGS "-O2"
+@@ -94,7 +94,7 @@ setenv extra_lib
+ #> generate library locations
+        setenv M3LIB ${lib_basedir}/${system}/${compiler}
+        if ( ! -d $M3LIB ) mkdir -p $M3LIB
+-       setenv MPI_INC $M3LIB/mpich/include
++       setenv MPI_INC /usr/include
+ 
+ #> set executable id
+  setenv EXEC_ID ${bld_os}_${system}${compiler}
+diff --git a/scripts/icon/bldit.icon b/scripts/icon/bldit.icon
+index 14f086c..36322d1 100755
+--- a/scripts/icon/bldit.icon
++++ b/scripts/icon/bldit.icon
+@@ -115,7 +115,7 @@
+  set IOAPI  = "${M3LIB}/ioapi_3.1/Linux2_${system}${compiler_ext} -lioapi"
+  set IOAPIMOD = ${M3LIB}/ioapi_3.1/Linux2_${system}${compiler_ext}
+ 
+- set NETCDF = "${M3LIB}/netcdf/lib -lnetcdf"
++ set NETCDF = "${M3LIB}/netcdf/lib -lnetcdff -lnetcdf -lhdf5_hl -lhdf5 -lz -lm -lcurl"
+ 
+  set PARMOD = "."
+  set STENEX = "."

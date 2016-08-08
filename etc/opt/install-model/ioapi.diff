@@ -1,0 +1,50 @@
+diff --git a/Makefile b/Makefile
+index 0053c82..947e980 100644
+--- a/Makefile
++++ b/Makefile
+@@ -92,14 +92,14 @@ VERSION = 3.1
+ #       Defining BIN3_DEBUG turns on trace-messages for native-binary
+ #       mode routines.
+ 
+-BASEDIR    = ${HOME}/web31
+-INSTALL    = /SOMEWHERE
++BASEDIR    = /opt/model/ioapi
++INSTALL    = $(BASEDIR)
+ LIBINST    = $(INSTALL)/$(BIN)
+ BININST    = $(INSTALL)/$(BIN)
+ 
+-CPLMODE    = cpl
+-IOAPIDEFS  = -DIOAPICPL
+-PVMINCL    = $(PVM_ROOT)/conf/$(PVM_ARCH).def
++CPLMODE    = nocpl
++IOAPIDEFS  =
++PVMINCL    = /dev/null
+ 
+ #               ****   Variants   ****
+ #
+diff --git a/ioapi/Makefile b/ioapi/Makefile
+index 26795cd..24cff1d 100644
+--- a/ioapi/Makefile
++++ b/ioapi/Makefile
+@@ -68,7 +68,7 @@
+ 
+ .SUFFIXES: .m4 .c .F .f .mod
+ 
+-BASEDIR = ${HOME}/web31
++BASEDIR = /opt/model/ioapi
+ 
+ IODIR   = ${BASEDIR}/ioapi
+ 
+diff --git a/m3tools/Makefile b/m3tools/Makefile
+index 37ee198..b3a9fd6 100644
+--- a/m3tools/Makefile
++++ b/m3tools/Makefile
+@@ -63,7 +63,7 @@ LDFLAGS = -I$(IODIR) -DIOAPICPL $(DEFINEFLAGS) $(ARCHFLAGS)
+ #
+ #LIBS = -L${OBJDIR} -lioapi -lnetcdf -lnetcdff $(PVMLIBS) $(OMPLIBS) $(ARCHLIB) $(ARCHLIBS)
+ 
+-LIBS = -L${OBJDIR} -lioapi -lnetcdf $(OMPLIBS) $(ARCHLIB) $(ARCHLIBS)
++LIBS = -L${OBJDIR} -lioapi -lnetcdf -lhdf5_hl -lhdf5 -lz -lm -lcurl $(OMPLIBS) $(ARCHLIB) $(ARCHLIBS)
+ 
+ VPATH = ${OBJDIR}
+ 
