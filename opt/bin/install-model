@@ -23,7 +23,8 @@ gfortran \
 libcurl4-gnutls-dev \
 libhdf5-dev \
 libnetcdf-dev \
-mpich2
+mpich2 \
+wget
 
 ##########################################################################
 # I/O API: Models-3/EDSS Input/Output Applications Programming Interface #
