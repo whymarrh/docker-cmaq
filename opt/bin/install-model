@@ -2,16 +2,6 @@
 
 set -eo pipefail
 
-working_directory()
-{
-	local dir="$1"
-	if [[ ! -d "$dir" ]]
-	then
-		mkdir -p "$dir"
-	fi
-	cd "$dir"
-}
-
 ################
 # Dependencies #
 ################
@@ -30,17 +20,16 @@ wget
 # I/O API: Models-3/EDSS Input/Output Applications Programming Interface #
 ##########################################################################
 
-ioapi_install_dir="/opt/model/ioapi"
-working_directory "$(dirname "$ioapi_install_dir")"
-mkdir "$(basename "$ioapi_install_dir")"
-echo "Installing I/O API into '$ioapi_install_dir'"
+mkdir -p /opt/model/ioapi
+cd /opt/model
+echo "Installing I/O API into '/opt/model/ioapi'"
 
 wget 'https://www.cmascenter.org/ioapi/download/ioapi-3.1.tar.gz'
 gunzip ioapi-3.1.tar.gz
-tar -xf ioapi-3.1.tar -C "$(basename "$ioapi_install_dir")"
+tar -xf ioapi-3.1.tar -C ioapi
 rm ioapi-3.1.tar
 
-working_directory "$ioapi_install_dir"
+cd /opt/model/ioapi
 export BIN="Linux2_x86_64"
 patch -p1 < /etc/opt/install-model/ioapi.diff
 make dirs
@@ -53,15 +42,14 @@ make
 # Community Multi-scale Air Quality (CMAQ) Modeling System #
 ############################################################
 
-CMAQ_install_dir="/opt/model"
-working_directory "$CMAQ_install_dir"
-echo "Installing the CMAQ model into '$CMAQ_install_dir'"
+cd /opt/model
+echo "Installing the CMAQ model into '/opt/model'"
 
 wget 'ftp://ftp.unc.edu/pub/cmas/SOFTWARE2/MODELS/CMAQ/5.0.2/CMAQv5.0.2.Apr2014.tar.gz'
 gunzip CMAQv5.0.2.Apr2014.tar.gz
 tar -xf CMAQv5.0.2.Apr2014.tar
 rm CMAQv5.0.2.Apr2014.tar
-working_directory "CMAQv5.0.2"
+cd "CMAQv5.0.2"
 
 wget 'ftp://ftp.unc.edu/pub/cmas/SOFTWARE2/MODELS/CMAQ/5.0.2/DATA.CMAQv5.0.2.Apr2014.tar.gz'
 gunzip DATA.CMAQv5.0.2.Apr2014.tar.gz
@@ -70,23 +58,23 @@ rm DATA.CMAQv5.0.2.Apr2014.tar
 
 patch -p1 < /etc/opt/install-model/model.diff
 ./scripts/config.cmaq
-ln -s "$ioapi_install_dir" "$(find lib -type d | tail -n 1)/ioapi_3.1"
+ln -s /opt/model/ioapi "$(find lib -type d | tail -n 1)/ioapi_3.1"
 
-working_directory "$CMAQ_install_dir/CMAQv5.0.2/scripts/stenex"
+cd "/opt/model/CMAQv5.0.2/scripts/stenex"
 ./bldit.se 2>&1 | tee bldit.se.log
 ./bldit.se_noop 2>&1 | tee bldit.se_noop.log
 
-working_directory "$CMAQ_install_dir/CMAQv5.0.2/scripts/pario"
+cd "/opt/model/CMAQv5.0.2/scripts/pario"
 ./bldit.pario 2>&1 | tee bldit.pario.log
 
-working_directory "$CMAQ_install_dir/CMAQv5.0.2/scripts/build"
+cd "/opt/model/CMAQv5.0.2/scripts/build"
 ./bldit.bldmake 2>&1 | tee bldit.bldmake.log
 
-working_directory "$CMAQ_install_dir/CMAQv5.0.2/scripts/icon"
+cd "/opt/model/CMAQv5.0.2/scripts/icon"
 ./bldit.icon 2>&1 | tee bldit.icon.profile.log
 
-working_directory "$CMAQ_install_dir/CMAQv5.0.2/scripts/bcon"
+cd "/opt/model/CMAQv5.0.2/scripts/bcon"
 ./bldit.bcon 2>&1 | tee bldit.bcon.profile.log
 
-working_directory "$CMAQ_install_dir/CMAQv5.0.2/scripts/cctm"
+cd "/opt/model/CMAQv5.0.2/scripts/cctm"
 ./bldit.cctm 2>&1 | tee bldit.cctm.log
