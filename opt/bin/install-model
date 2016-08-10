@@ -24,7 +24,7 @@ mkdir -p /opt/model/ioapi
 cd /opt/model
 echo "Installing I/O API into '/opt/model/ioapi'"
 
-wget 'https://www.cmascenter.org/ioapi/download/ioapi-3.1.tar.gz'
+wget --quiet 'https://www.cmascenter.org/ioapi/download/ioapi-3.1.tar.gz'
 gunzip ioapi-3.1.tar.gz
 tar -xf ioapi-3.1.tar -C ioapi
 rm ioapi-3.1.tar
@@ -45,13 +45,13 @@ make
 cd /opt/model
 echo "Installing the CMAQ model into '/opt/model'"
 
-wget 'ftp://ftp.unc.edu/pub/cmas/SOFTWARE2/MODELS/CMAQ/5.0.2/CMAQv5.0.2.Apr2014.tar.gz'
+wget --quiet 'ftp://ftp.unc.edu/pub/cmas/SOFTWARE2/MODELS/CMAQ/5.0.2/CMAQv5.0.2.Apr2014.tar.gz'
 gunzip CMAQv5.0.2.Apr2014.tar.gz
 tar -xf CMAQv5.0.2.Apr2014.tar
 rm CMAQv5.0.2.Apr2014.tar
 cd "CMAQv5.0.2"
 
-wget 'ftp://ftp.unc.edu/pub/cmas/SOFTWARE2/MODELS/CMAQ/5.0.2/DATA.CMAQv5.0.2.Apr2014.tar.gz'
+wget --quiet 'ftp://ftp.unc.edu/pub/cmas/SOFTWARE2/MODELS/CMAQ/5.0.2/DATA.CMAQv5.0.2.Apr2014.tar.gz'
 gunzip DATA.CMAQv5.0.2.Apr2014.tar.gz
 mkdir data && tar -xf DATA.CMAQv5.0.2.Apr2014.tar -C data --strip-components=2
 rm DATA.CMAQv5.0.2.Apr2014.tar
