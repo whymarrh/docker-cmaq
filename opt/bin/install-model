@@ -45,11 +45,10 @@ make
 cd /opt/model
 echo "Installing the CMAQ model into '/opt/model'"
 
-wget --quiet 'ftp://ftp.unc.edu/pub/cmas/SOFTWARE2/MODELS/CMAQ/5.0.2/CMAQv5.0.2.Apr2014.tar.gz'
-gunzip CMAQv5.0.2.Apr2014.tar.gz
-tar -xf CMAQv5.0.2.Apr2014.tar
-rm CMAQv5.0.2.Apr2014.tar
-cd "CMAQv5.0.2"
+wget --quiet 'https://github.com/CMASCenter/CMAQ/archive/5.0.2.tar.gz'
+tar -xf 5.0.2.tar.gz
+rm 5.0.2.tar.gz
+cd "CMAQ-5.0.2"
 
 wget --quiet 'ftp://ftp.unc.edu/pub/cmas/SOFTWARE2/MODELS/CMAQ/5.0.2/DATA.CMAQv5.0.2.Apr2014.tar.gz'
 gunzip DATA.CMAQv5.0.2.Apr2014.tar.gz
@@ -58,23 +57,22 @@ rm DATA.CMAQv5.0.2.Apr2014.tar
 
 patch -p1 < /etc/opt/install-model/model.diff
 ./scripts/config.cmaq
-ln -s /opt/model/ioapi "$(find lib -type d | tail -n 1)/ioapi_3.1"
 
-cd "/opt/model/CMAQv5.0.2/scripts/stenex"
+cd "/opt/model/CMAQ-5.0.2/scripts/stenex"
 ./bldit.se 2>&1 | tee bldit.se.log
 ./bldit.se_noop 2>&1 | tee bldit.se_noop.log
 
-cd "/opt/model/CMAQv5.0.2/scripts/pario"
+cd "/opt/model/CMAQ-5.0.2/scripts/pario"
 ./bldit.pario 2>&1 | tee bldit.pario.log
 
-cd "/opt/model/CMAQv5.0.2/scripts/build"
+cd "/opt/model/CMAQ-5.0.2/scripts/build"
 ./bldit.bldmake 2>&1 | tee bldit.bldmake.log
 
-cd "/opt/model/CMAQv5.0.2/scripts/icon"
+cd "/opt/model/CMAQ-5.0.2/scripts/icon"
 ./bldit.icon 2>&1 | tee bldit.icon.profile.log
 
-cd "/opt/model/CMAQv5.0.2/scripts/bcon"
+cd "/opt/model/CMAQ-5.0.2/scripts/bcon"
 ./bldit.bcon 2>&1 | tee bldit.bcon.profile.log
 
-cd "/opt/model/CMAQv5.0.2/scripts/cctm"
+cd "/opt/model/CMAQ-5.0.2/scripts/cctm"
 ./bldit.cctm 2>&1 | tee bldit.cctm.log

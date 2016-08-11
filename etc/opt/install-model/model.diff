@@ -50,7 +50,7 @@ index 8a0fb12..fbbe399 100755
  
  #> model repository location
 - setenv M3HOME /nas01/apps/CMAQv5.0.2
-+ setenv M3HOME /opt/model/CMAQv5.0.2
++ setenv M3HOME /opt/model/CMAQ-5.0.2
   setenv M3MODEL ${M3HOME}/models
   setenv M3DATA  ${M3HOME}/data
  
