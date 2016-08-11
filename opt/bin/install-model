@@ -76,3 +76,6 @@ cd "/opt/model/CMAQ-5.0.2/scripts/bcon"
 
 cd "/opt/model/CMAQ-5.0.2/scripts/cctm"
 ./bldit.cctm 2>&1 | tee bldit.cctm.log
+
+cd "/opt/model/CMAQ-5.0.2/scripts/cctm_ddm"
+./bldit.cctm.ddm 2>&1 | tee bldit.cctm.ddm.log
