@@ -6,6 +6,7 @@ set -eo pipefail
 # Dependencies #
 ################
 
+DEBIAN_FRONTEND=noninteractive \
 apt-get install --assume-yes \
 build-essential \
 curl \
