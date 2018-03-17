@@ -51,11 +51,6 @@ tar -xf 5.0.2.tar.gz
 rm 5.0.2.tar.gz
 cd "CMAQ-5.0.2"
 
-curl -fsSLO 'ftp://ftp.unc.edu/pub/cmas/SOFTWARE2/MODELS/CMAQ/5.0.2/DATA.CMAQv5.0.2.Apr2014.tar.gz'
-gunzip DATA.CMAQv5.0.2.Apr2014.tar.gz
-mkdir data && tar -xf DATA.CMAQv5.0.2.Apr2014.tar -C data --strip-components=2
-rm DATA.CMAQv5.0.2.Apr2014.tar
-
 patch -p1 < /etc/opt/install-model/model.diff
 ./scripts/config.cmaq
 
