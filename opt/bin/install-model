@@ -46,7 +46,7 @@ make
 cd /opt/model
 echo "Installing the CMAQ model into '/opt/model'"
 
-curl -fsSLO 'https://github.com/CMASCenter/CMAQ/archive/5.0.2.tar.gz'
+curl -fsSLO 'https://github.com/USEPA/CMAQ/archive/5.0.2.tar.gz'
 tar -xf 5.0.2.tar.gz
 rm 5.0.2.tar.gz
 cd "CMAQ-5.0.2"
