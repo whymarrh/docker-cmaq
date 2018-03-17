@@ -8,6 +8,7 @@ set -eo pipefail
 
 apt-get install --assume-yes \
 build-essential \
+curl \
 csh \
 gfortran \
 libcurl4-gnutls-dev \
@@ -24,7 +25,7 @@ mkdir -p /opt/model/ioapi
 cd /opt/model
 echo "Installing I/O API into '/opt/model/ioapi'"
 
-wget --quiet 'https://www.cmascenter.org/ioapi/download/ioapi-3.1.tar.gz'
+curl -fsSLO 'https://www.cmascenter.org/ioapi/download/ioapi-3.1.tar.gz'
 gunzip ioapi-3.1.tar.gz
 tar -xf ioapi-3.1.tar -C ioapi
 rm ioapi-3.1.tar
@@ -45,12 +46,12 @@ make
 cd /opt/model
 echo "Installing the CMAQ model into '/opt/model'"
 
-wget --quiet 'https://github.com/CMASCenter/CMAQ/archive/5.0.2.tar.gz'
+curl -fsSLO 'https://github.com/CMASCenter/CMAQ/archive/5.0.2.tar.gz'
 tar -xf 5.0.2.tar.gz
 rm 5.0.2.tar.gz
 cd "CMAQ-5.0.2"
 
-wget --quiet 'ftp://ftp.unc.edu/pub/cmas/SOFTWARE2/MODELS/CMAQ/5.0.2/DATA.CMAQv5.0.2.Apr2014.tar.gz'
+curl -fsSLO 'ftp://ftp.unc.edu/pub/cmas/SOFTWARE2/MODELS/CMAQ/5.0.2/DATA.CMAQv5.0.2.Apr2014.tar.gz'
 gunzip DATA.CMAQv5.0.2.Apr2014.tar.gz
 mkdir data && tar -xf DATA.CMAQv5.0.2.Apr2014.tar -C data --strip-components=2
 rm DATA.CMAQv5.0.2.Apr2014.tar
