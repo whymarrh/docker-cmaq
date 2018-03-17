@@ -26,10 +26,10 @@ mkdir -p /opt/model/ioapi
 cd /opt/model
 echo "Installing I/O API into '/opt/model/ioapi'"
 
-curl -fsSLO 'https://www.cmascenter.org/ioapi/download/ioapi-3.1.tar.gz'
-gunzip ioapi-3.1.tar.gz
-tar -xf ioapi-3.1.tar -C ioapi
-rm ioapi-3.1.tar
+curl -fsSLO 'https://www.cmascenter.org/ioapi/download/ioapi-3.2.tar.gz'
+gunzip ioapi-3.2.tar.gz
+tar -xf ioapi-3.2.tar -C ioapi
+rm ioapi-3.2.tar
 
 cd /opt/model/ioapi
 export BIN="Linux2_x86_64"
@@ -47,32 +47,32 @@ make
 cd /opt/model
 echo "Installing the CMAQ model into '/opt/model'"
 
-curl -fsSLO 'https://github.com/USEPA/CMAQ/archive/5.0.2.tar.gz'
-tar -xf 5.0.2.tar.gz
-rm 5.0.2.tar.gz
-cd "CMAQ-5.0.2"
+curl -fsSLO 'https://github.com/USEPA/CMAQ/archive/5.2.1.tar.gz'
+tar -xf 5.2.1.tar.gz
+rm 5.2.1.tar.gz
+cd "CMAQ-5.2.1"
 
 patch -p1 < /etc/opt/install-model/model.diff
 ./scripts/config.cmaq
 
-cd "/opt/model/CMAQ-5.0.2/scripts/stenex"
+cd "/opt/model/CMAQ-5.2.1/scripts/stenex"
 ./bldit.se 2>&1 | tee bldit.se.log
 ./bldit.se_noop 2>&1 | tee bldit.se_noop.log
 
-cd "/opt/model/CMAQ-5.0.2/scripts/pario"
+cd "/opt/model/CMAQ-5.2.1/scripts/pario"
 ./bldit.pario 2>&1 | tee bldit.pario.log
 
-cd "/opt/model/CMAQ-5.0.2/scripts/build"
+cd "/opt/model/CMAQ-5.2.1/scripts/build"
 ./bldit.bldmake 2>&1 | tee bldit.bldmake.log
 
-cd "/opt/model/CMAQ-5.0.2/scripts/icon"
+cd "/opt/model/CMAQ-5.2.1/scripts/icon"
 ./bldit.icon 2>&1 | tee bldit.icon.profile.log
 
-cd "/opt/model/CMAQ-5.0.2/scripts/bcon"
+cd "/opt/model/CMAQ-5.2.1/scripts/bcon"
 ./bldit.bcon 2>&1 | tee bldit.bcon.profile.log
 
-cd "/opt/model/CMAQ-5.0.2/scripts/cctm"
+cd "/opt/model/CMAQ-5.2.1/scripts/cctm"
 ./bldit.cctm 2>&1 | tee bldit.cctm.log
 
-cd "/opt/model/CMAQ-5.0.2/scripts/cctm_ddm"
+cd "/opt/model/CMAQ-5.2.1/scripts/cctm_ddm"
 ./bldit.cctm.ddm 2>&1 | tee bldit.cctm.ddm.log
