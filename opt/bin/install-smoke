@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+
+set -eo pipefail
+
+################
+# Dependencies #
+################
+
+apt-get install --assume-yes \
+build-essential \
+curl \
+csh \
+gfortran \
+libcurl4-gnutls-dev \
+libhdf5-dev \
+libnetcdf-dev \
+mpich2 \
+tcsh \
+wget
+
+##########################################
+# SMOKE v4.5 Public Release (April 2017) #
+##########################################
+
+mkdir -p /opt/smoke
+cd /opt
+printf '%s\n' 'Installing SMOKE'
+
+SMOKE_GITHUB_RELEASE_URL_PREFIX='https://github.com/CEMPD/SMOKE/releases/download/SMOKEv45_Apr2017'
+curl -fsSLO "$SMOKE_GITHUB_RELEASE_URL_PREFIX/smoke_install.csh"
+curl -fsSLO "$SMOKE_GITHUB_RELEASE_URL_PREFIX/smoke_v45.Linux2_x86_64ifort.tar.gz"
+curl -fsSLO "$SMOKE_GITHUB_RELEASE_URL_PREFIX/smoke_v45.nctox.data.tar.gz"
+
+chmod +x smoke_install.csh
+tcsh -c "env SMK_HOME=/opt/smoke ./smoke_install.csh"
+
+rm 'smoke_install.csh'
+rm 'smoke_v45.Linux2_x86_64ifort.tar.gz'
+rm 'smoke_v45.nctox.data.tar.gz'
